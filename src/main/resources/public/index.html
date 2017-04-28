@@ -4,9 +4,54 @@
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" type="text/css" href="css/blaze.min.css">
-
+  <script src="codemirror/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+  <script src="codemirror/javascript/javascript.js"></script>
 </head>
-<body class="c-text" style="padding-top: 5%; padding-left:5%">
+<body class="c-text" style="padding-top: 2%; padding-left:2%">
   <h1>Golo experiments</h1>
+  <textarea id="code" rows="10" cols="50"></textarea>
+  <hr>
+  <button id="run" class="c-button c-button--info">Run...</button>
+  <hr>
+  <textarea id="result" rows="2" cols="50"></textarea>
+
+
+  <script>
+    let editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true
+    });
+
+    let result = CodeMirror.fromTextArea(document.getElementById("result"), {
+      lineNumbers: true
+    });
+
+editor.setValue(`# when you click on the "Run" button, the "res" function is called
+function hello = -> "Hello 🌍"
+
+function hi = |name| {
+  return "hi " + name
+}
+
+function res = {
+  return hello() + "\n" + hi("Bob")
+}
+`)
+    document.getElementById("run").addEventListener("click", function() {
+      console.log(editor.getValue())
+
+      fetch("/exec",{
+        method: "POST",
+        body: JSON.stringify({code:editor.getValue()})
+      })
+      .then(function(res) { return res.json() })
+      .then(function(data){
+        result.setValue("")
+        console.log(data)
+        result.setValue(data.result)
+      })
+    })
+
+  </script>
 </body>
 </html>
