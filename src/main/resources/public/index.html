@@ -37,18 +37,21 @@ function res = {
   return hello() + " - " + hi("Bob")
 }
 `)
-    document.getElementById("run").addEventListener("click", function() {
-      console.log(editor.getValue())
-
+    document.getElementById("run").addEventListener("click", () => {
+      //console.log(editor.getValue())
       fetch("/exec",{
         method: "POST",
         body: JSON.stringify({code:editor.getValue()})
       })
-      .then(function(res) { return res.json() })
-      .then(function(data){
+      .then((res) => { return res.json() })
+      .then((data) => {
         result.setValue("")
         console.log(data)
         result.setValue(data.result)
+      })
+      .catch((err) => {
+        console.log(err)
+        result.setValue(err)
       })
     })
 
