@@ -46,7 +46,7 @@ function main = |args| {
     |message| -> response: json(DynamicObject(): result(message)),
     |error| {
       println(error)
-      return response: json(DynamicObject(): error(error))
+      return response: json(DynamicObject(): result(error))
     }
   ))
 
