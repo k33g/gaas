@@ -19,6 +19,8 @@
     <golo.version>3.2.0-SNAPSHOT</golo.version>
     -->
     <golo.version>3.2.0-M6</golo.version>
+    <vertx.version>3.4.1</vertx.version>
+
 
   </properties>
 
@@ -36,15 +38,15 @@
     </dependency>
 
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.7.21</version>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-core</artifactId>
+      <version>${vertx.version}</version>
     </dependency>
 
     <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.6.0.RC0</version>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+      <version>${vertx.version}</version>
     </dependency>
 
     <dependency>
