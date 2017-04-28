@@ -5,7 +5,9 @@
 module gaas
 
 import gololang.Errors
+module gololang.JSON
 import spark.Spark
+
 
 augment spark.Response {
   function json = |this, content| {
