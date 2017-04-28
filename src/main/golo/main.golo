@@ -5,9 +5,7 @@
 module gaas
 
 import gololang.Errors
-import gololang.JSON
 import spark.Spark
-
 
 augment spark.Response {
   function json = |this, content| {
@@ -20,10 +18,6 @@ augment spark.Response {
   }
 }
 
-augment spark.Request {
-  function bodyToDynamicObject = |this| -> JSON.toDynamicObjectFromJSONString(this: body())
-}
-
 let env = gololang.EvaluationEnvironment()
 
 function main = |args| {
@@ -33,23 +27,23 @@ function main = |args| {
   staticFileLocation("/public")
 
   get("/about", |request, response| -> trying({
-    return DynamicObject(): about("Golo As A Service")
+    return "Golo As A Service"
   })
   : either(
-    |message| -> response: json(message),
+    |message| -> response: json(DynamicObject(): about(message)),
     |error| -> response: json(DynamicObject(): error(error))
   ))
 
 
   post("/exec", |request, response| -> trying({
-    let data = request: bodyToDynamicObject()
-    let code = data: code()
+    let data = JSON.parse(request: body())
+    let code = data: get("code")
     let mod = env: anonymousModule(code)
     let res = fun("res", mod)
-    return DynamicObject(): res(res())
+    return res()
   })
   : either(
-    |message| -> response: json(message),
+    |message| -> response: json(DynamicObject(): result(message)),
     |error| {
       println(error)
       return response: json(DynamicObject(): error(error))
