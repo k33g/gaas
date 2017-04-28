@@ -49,6 +49,7 @@ function main = |args| {
   : either(
     |message| -> response: json(message),
     |error| {
+      println(error)
       return response: json(DynamicObject(): error(error))
     }
   ))
