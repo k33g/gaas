@@ -1,0 +1,9 @@
+{
+  "build": {
+    "type": "maven",
+    "goal": "package"
+  },
+  "deploy": {
+    "jarName": "target/gaas-0.0.1-jar-with-dependencies.jar"
+  }
+}
