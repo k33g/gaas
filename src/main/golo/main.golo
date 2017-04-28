@@ -5,7 +5,7 @@
 module gaas
 
 import gololang.Errors
-module gololang.JSON
+import gololang.JSON
 import spark.Spark
 
 
